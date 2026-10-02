@@ -200,6 +200,9 @@ class HeaderFragment : SettingsFragment() {
             // From [HeaderFragment.onCreatePreferences]
             if (!AdaptionUtil.isXiaomiRestrictedLearningDevice) {
                 searchConfiguration.index(R.xml.preferences_advanced)
+                searchConfiguration
+                    .index(R.xml.preferences_kokoro_tts)
+                    .addBreadcrumb(activity.getString(CommonString.pref_cat_advanced))
             }
 
             // From [NotificationsSettingsFragment.initSubscreen]

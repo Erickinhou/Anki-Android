@@ -373,6 +373,64 @@
     <string name="record_audio_permission">android.permission.RECORD_AUDIO</string>
 
 
+    <!-- Voice ids for hexgrad/kokoro-82m on OpenRouter. Not translated. -->
+    <string-array name="kokoro_voices">
+        <item>af_alloy</item>
+        <item>af_aoede</item>
+        <item>af_bella</item>
+        <item>af_heart</item>
+        <item>af_jessica</item>
+        <item>af_kore</item>
+        <item>af_nicole</item>
+        <item>af_nova</item>
+        <item>af_river</item>
+        <item>af_sarah</item>
+        <item>af_sky</item>
+        <item>am_adam</item>
+        <item>am_echo</item>
+        <item>am_eric</item>
+        <item>am_fenrir</item>
+        <item>am_liam</item>
+        <item>am_michael</item>
+        <item>am_onyx</item>
+        <item>am_puck</item>
+        <item>am_santa</item>
+        <item>bf_alice</item>
+        <item>bf_emma</item>
+        <item>bf_isabella</item>
+        <item>bf_lily</item>
+        <item>bm_daniel</item>
+        <item>bm_fable</item>
+        <item>bm_george</item>
+        <item>bm_lewis</item>
+        <item>ef_dora</item>
+        <item>em_alex</item>
+        <item>em_santa</item>
+        <item>ff_siwis</item>
+        <item>hf_alpha</item>
+        <item>hf_beta</item>
+        <item>hm_omega</item>
+        <item>hm_psi</item>
+        <item>if_sara</item>
+        <item>im_nicola</item>
+        <item>jf_alpha</item>
+        <item>jf_gongitsune</item>
+        <item>jf_nezumi</item>
+        <item>jf_tebukuro</item>
+        <item>jm_kumo</item>
+        <item>pf_dora</item>
+        <item>pm_alex</item>
+        <item>pm_santa</item>
+        <item>zf_xiaobei</item>
+        <item>zf_xiaoni</item>
+        <item>zf_xiaoxiao</item>
+        <item>zf_xiaoyi</item>
+        <item>zm_yunjian</item>
+        <item>zm_yunxi</item>
+        <item>zm_yunxia</item>
+        <item>zm_yunyang</item>
+    </string-array>
+
     <string-array name="import_cache_error_resolutions">
         <item>@string/import_error_resolution_try_again</item>
         <item>@string/import_error_resolution_free_up_space</item>

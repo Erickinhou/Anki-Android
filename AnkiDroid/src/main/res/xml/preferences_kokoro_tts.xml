@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:key="@string/kokoro_tts_screen_key"
+    android:title="@string/kokoro_tts_title">
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        android:key="@string/kokoro_tts_enabled_key"
+        android:title="@string/kokoro_tts_enabled" />
+    <com.ichi2.preferences.VersatileTextPreference
+        android:inputType="textPassword"
+        android:key="@string/kokoro_api_key_key"
+        android:title="@string/kokoro_tts_api_key" />
+    <ListPreference
+        android:defaultValue="af_alloy"
+        android:entries="@array/kokoro_voices"
+        android:entryValues="@array/kokoro_voices"
+        android:key="@string/kokoro_voice_key"
+        android:title="@string/kokoro_tts_voice"
+        app:useSimpleSummaryProvider="true" />
+</PreferenceScreen>

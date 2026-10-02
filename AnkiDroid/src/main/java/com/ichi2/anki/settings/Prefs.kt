@@ -15,6 +15,7 @@ import com.ichi2.anki.cardviewer.TapGestureMode
 import com.ichi2.anki.common.preferences.AnimationPreferences
 import com.ichi2.anki.common.preferences.sharedPrefs
 import com.ichi2.anki.common.utils.isRunningAsUnitTest
+import com.ichi2.anki.kokoro.KokoroSpeechClient
 import com.ichi2.anki.preferences.SharedPreferencesProvider
 import com.ichi2.anki.settings.enums.AppTheme
 import com.ichi2.anki.settings.enums.DayTheme
@@ -438,6 +439,12 @@ open class PrefsRepository protected constructor(
      * Whether the switch profile feature is enabled.
      */
     val switchProfileEnabled by booleanPref(R.string.pref_enable_switch_profile_key, false)
+
+    // **************************************** Kokoro TTS **************************************** //
+
+    var isKokoroTtsEnabled by booleanPref(R.string.kokoro_tts_enabled_key, defaultValue = false)
+    var kokoroApiKey by stringPref(R.string.kokoro_api_key_key)
+    var kokoroVoice by stringPref(R.string.kokoro_voice_key, KokoroSpeechClient.DEFAULT_VOICE)
 
     // **************************************** UI Config *************************************** //
 

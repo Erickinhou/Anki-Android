@@ -32,6 +32,8 @@
     <string name="multimedia_editor_png_paste_error">Error converting clipboard image to png: %s</string>
     <string name="multimedia_editor_attach_tooltip" comment="Appear when holding the finger  on the paperclip icon">Attach multimedia content</string>
     <string name="multimedia_editor_attach_mm_content" comment="used for screen readers. Not visible to the user">Attach multimedia content to the %1$s field</string>
+    <string name="kokoro_tts_button_tooltip" comment="Shown when holding the Kokoro voice button on a note field">Generate voice</string>
+    <string name="kokoro_tts_button_content" comment="used for screen readers. Not visible to the user">Generate voice for the %1$s field</string>
 
     <!-- Audio view -->
     <!-- Message when recording fails -->

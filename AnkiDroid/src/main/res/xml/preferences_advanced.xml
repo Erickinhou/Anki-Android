@@ -11,6 +11,7 @@
 
 <!-- Advanced Preferences -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:search="http://schemas.android.com/apk/com.bytehamster.lib.preferencesearch"
     android:title="@string/pref_cat_advanced"
     android:key="@string/pref_advanced_screen_key">
         <com.ichi2.preferences.ExternalDirectorySelectionPreference
@@ -100,6 +101,12 @@
         android:key="@string/tts_key"
         android:summary="@string/tts_summ"
         android:title="@string/tts" />
+    <Preference
+        android:fragment="com.ichi2.anki.preferences.KokoroTtsSettingsFragment"
+        android:key="@string/kokoro_tts_screen_link_key"
+        android:summary="@string/kokoro_tts_summary"
+        android:title="@string/kokoro_tts_title"
+        search:ignore="true" />
         <PreferenceCategory
             android:title="@string/pref_cat_security" >
             <SwitchPreferenceCompat

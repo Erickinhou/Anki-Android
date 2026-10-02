@@ -316,6 +316,7 @@ fun getFragmentFromXmlRes(
         R.xml.preferences_reviewer_controls -> ControlsSettingsFragment()
         R.xml.preferences_previewer_controls -> ControlsSettingsFragment()
         R.xml.preferences_advanced -> AdvancedSettingsFragment()
+        R.xml.preferences_kokoro_tts -> KokoroTtsSettingsFragment()
         R.xml.preferences_accessibility -> AccessibilitySettingsFragment()
         R.xml.preferences_developer_options -> DeveloperOptionsFragment()
         R.xml.preferences_reviewer -> ReviewerOptionsFragment()

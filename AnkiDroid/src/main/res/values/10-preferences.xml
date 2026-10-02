@@ -555,4 +555,15 @@ this formatter is used if the bind only applies to the answer">A: %s</string>
     <string name="pref_custom_path" maxLength="41" comment="Dialog button letting the user type a directory path manually">Custom path</string>
     <string name="pref_enter_custom_path" maxLength="41">Enter custom path</string>
     <string name="pref_directory_not_writable">Directory is not writable</string>
+
+    <!-- Kokoro TTS (OpenRouter) -->
+    <string name="kokoro_tts_title" maxLength="41">Kokoro voice</string>
+    <string name="kokoro_tts_summary">Speak the first field with Kokoro when you add a note</string>
+    <string name="kokoro_tts_enabled" maxLength="41">Generate voice when adding a note</string>
+    <string name="kokoro_tts_api_key" maxLength="41">OpenRouter API key</string>
+    <string name="kokoro_tts_voice" maxLength="41">Voice</string>
+    <string name="kokoro_tts_generating">Generating audio…</string>
+    <string name="kokoro_tts_failed">Could not generate voice. The note was saved without audio.</string>
+    <string name="kokoro_tts_missing_key">Add an OpenRouter API key in Advanced settings</string>
+    <string name="kokoro_tts_empty_field">The first field has no text to speak</string>
 </resources>

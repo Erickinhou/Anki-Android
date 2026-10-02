@@ -112,6 +112,8 @@ import com.ichi2.anki.dialogs.startDeckSelection
 import com.ichi2.anki.dialogs.tags.TagsDialogFactory
 import com.ichi2.anki.dialogs.tags.TagsDialogListener
 import com.ichi2.anki.exception.toBytesShortString
+import com.ichi2.anki.kokoro.KokoroFieldText
+import com.ichi2.anki.kokoro.KokoroSpeechClient
 import com.ichi2.anki.libanki.Card
 import com.ichi2.anki.libanki.CardId
 import com.ichi2.anki.libanki.CardOrdinal
@@ -154,6 +156,7 @@ import com.ichi2.anki.previewer.TemplatePreviewerPage
 import com.ichi2.anki.servicelayer.LanguageHintService.languageHint
 import com.ichi2.anki.servicelayer.NoteService
 import com.ichi2.anki.servicelayer.NoteService.convertToHtmlNewline
+import com.ichi2.anki.settings.Prefs
 import com.ichi2.anki.snackbar.BaseSnackbarBuilderProvider
 import com.ichi2.anki.snackbar.SnackbarBuilder
 import com.ichi2.anki.snackbar.showSnackbar
@@ -188,7 +191,10 @@ import com.ichi2.utils.positiveButton
 import com.ichi2.utils.show
 import com.ichi2.utils.title
 import dev.androidbroadcast.vbpd.viewBinding
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.ankiweb.rsdroid.Backend
 import org.json.JSONArray
 import timber.log.Timber
@@ -1268,6 +1274,73 @@ class NoteEditorFragment :
         }
     }
 
+    /**
+     * Speaks the first field with Kokoro and appends `[sound:]`.
+     *
+     * Automatic save skips fields that already have a sound tag. A button press always generates.
+     * A network or API failure still allows the note to be saved when this runs during save.
+     */
+    private suspend fun attachKokoroSpeechIfEnabled() {
+        generateKokoroSpeech(onDemand = false)
+    }
+
+    private suspend fun generateKokoroSpeech(onDemand: Boolean) {
+        if (!onDemand && !Prefs.isKokoroTtsEnabled) return
+        val apiKey = Prefs.kokoroApiKey?.trim().orEmpty()
+        if (apiKey.isEmpty()) {
+            if (onDemand) showSnackbar(getString(CommonString.kokoro_tts_missing_key))
+            return
+        }
+        val fields = editorNote?.values()
+        val editText = editFields?.firstOrNull()
+        val current = editText?.text?.toString() ?: fields?.firstOrNull() ?: return
+        if (!onDemand && KokoroFieldText.hasSound(current)) return
+        val speechText = KokoroFieldText.speechText(current)
+        if (speechText == null) {
+            if (onDemand) showSnackbar(getString(CommonString.kokoro_tts_empty_field))
+            return
+        }
+        val cacheDir = requireContext().cacheDir
+        val voice = Prefs.kokoroVoice?.takeIf { it.isNotBlank() } ?: KokoroSpeechClient.DEFAULT_VOICE
+        try {
+            val audioFile =
+                withProgress(getString(CommonString.kokoro_tts_generating)) {
+                    withContext(Dispatchers.IO) {
+                        val audio = KokoroSpeechClient().synthesize(apiKey, speechText, voice)
+                        val file = File.createTempFile("kokoro_", ".mp3", cacheDir)
+                        try {
+                            file.writeBytes(audio)
+                            file
+                        } catch (e: Exception) {
+                            file.delete()
+                            throw e
+                        }
+                    }
+                }
+            try {
+                val filename = withCol { media.addFile(audioFile) }
+                val updated = KokoroFieldText.appendSound(current, filename)
+                if (fields != null && fields.isNotEmpty()) {
+                    fields[0] = updated
+                }
+                if (editText != null) {
+                    editText.setText(updated)
+                    EditFieldTextWatcher(0).afterTextChanged(editText.text!!)
+                }
+            } finally {
+                audioFile.delete()
+            }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Kokoro TTS failed")
+            val message =
+                e.message?.takeIf { it.isNotBlank() }
+                    ?: getString(CommonString.kokoro_tts_failed)
+            showSnackbar(message)
+        }
+    }
+
     private suspend fun saveNoteWithProgress() {
         // adding current note to collection
         val changes =
@@ -1314,6 +1387,7 @@ class NoteEditorFragment :
                     return@launch
                 }
                 addNoteErrorMessage = null
+                attachKokoroSpeechIfEnabled()
                 saveNoteWithProgress()
             }
         } else {
@@ -1908,6 +1982,16 @@ class NoteEditorFragment :
             newEditText.setCapitalize(prefs.getBoolean(PREF_NOTE_EDITOR_CAPITALIZE, true))
             val mediaButton = editLineView.binding.mediaButton
             val toggleStickyButton = editLineView.binding.toggleSticky
+            val kokoroButton = editLineView.binding.kokoroButton
+            if (i == 0 && Prefs.isKokoroTtsEnabled) {
+                kokoroButton.isVisible = true
+                val description = getString(CommonString.kokoro_tts_button_content, editLineView.name.orEmpty())
+                kokoroButton.contentDescription = description
+                kokoroButton.setTooltipTextCompat(description)
+                kokoroButton.setOnClickListener {
+                    launchCatchingTask { generateKokoroSpeech(onDemand = true) }
+                }
+            }
             mediaButton.setBackgroundResource(R.drawable.ic_attachment)
             mediaButton.setOnClickListener {
                 showMultimediaBottomSheet()

@@ -44,14 +44,17 @@ class FieldEditLine : FrameLayout {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             binding.editText.id = generateViewId()
             binding.toggleSticky.id = generateViewId()
+            binding.kokoroButton.id = generateViewId()
             binding.mediaButton.id = generateViewId()
             binding.expandButton.id = generateViewId()
             binding.editText.nextFocusForwardId = binding.toggleSticky.id
-            binding.toggleSticky.nextFocusForwardId = binding.mediaButton.id
+            binding.toggleSticky.nextFocusForwardId = binding.kokoroButton.id
+            binding.kokoroButton.nextFocusForwardId = binding.mediaButton.id
             binding.mediaButton.nextFocusForwardId = binding.expandButton.id
             ConstraintSet().apply {
                 clone(binding.constraintLayout)
-                connect(binding.toggleSticky.id, ConstraintSet.END, binding.mediaButton.id, ConstraintSet.START)
+                connect(binding.toggleSticky.id, ConstraintSet.END, binding.kokoroButton.id, ConstraintSet.START)
+                connect(binding.kokoroButton.id, ConstraintSet.END, binding.mediaButton.id, ConstraintSet.START)
                 connect(binding.mediaButton.id, ConstraintSet.END, binding.expandButton.id, ConstraintSet.START)
                 applyTo(binding.constraintLayout)
             }

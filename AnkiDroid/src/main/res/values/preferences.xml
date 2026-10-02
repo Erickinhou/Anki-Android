@@ -204,6 +204,11 @@
     <string name="pref_allow_card_external_launch_key">allowCardExternalLaunch</string>
     <string name="thirdparty_apps_key">thirdpartyapps_link</string>
     <string name="tts_key">tts</string>
+    <string name="kokoro_tts_screen_link_key">kokoroTtsScreenLink</string>
+    <string name="kokoro_tts_screen_key">kokoroTtsScreen</string>
+    <string name="kokoro_tts_enabled_key">kokoroTtsEnabled</string>
+    <string name="kokoro_api_key_key">kokoroApiKey</string>
+    <string name="kokoro_voice_key">kokoroVoice</string>
     <string name="double_scrolling_gap_key">double_scrolling</string>
     <string name="pref_allow_dangerous_js_api">allow_dangerous_js_api</string>
     <string name="html_javascript_debugging_key">html_javascript_debugging</string>
